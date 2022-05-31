@@ -80,13 +80,8 @@ fit1 <- lrm(af~age+pt+sofa+vasoactive+apsiii+hr,data = data_train2,x=T,y=T)
 fit1
 nom1 <- nomogram(fit1,fun=plogis,fun.at=c(0.001,.01,.05,seq(.1,.9,by=.1),.95,.99,.999),lp=F,funlabel='The rate of atrial fibrillation')
 plot(nom1)
-regplot(fit1,   showP = T, #是否展示统计学差异
-        droplines = F,#观测2示例计分是否画线
-        rank="sd", #根据统计学差异的显著性进行变量的排序
-        interval="confidence",
-        title='Nomogram for predicting new-onset AF in patient with AHF',
-        points = T
-) #展示观测的可信区间
+regplot(fit1,   showP = T,  droplines = F,   rank="sd",    interval="confidence",    title='Nomogram for predicting new-onset AF in patient with AHF',
+        points = T) 
 cal <- calibrate(fit1,method = 'boot',B=1000)
 plot(cal,xlim=c(0,1),ylim=c(0,1))
 detach(data_train)
@@ -134,10 +129,10 @@ forestplot(labeltext = as.matrix(rs_forest[,1:2]), title="Odds Ratio",
            boxsize = 0.4, 
            lineheight = unit(8,'mm'),
            colgap = unit(2,'mm'),
-           lwd.zero = 2,#设置参考线的粗细
-           lwd.ci = 2,#设置区间估计线的粗细
+           lwd.zero = 2,
+           lwd.ci = 2,
            col=fpColors(box='#458B00',summary="#8B008B",lines = 'black',zero = '#7AC5CD'),
-           xlab="The estimates",#设置x轴标签
-           lwd.xaxis=2,#设置X轴线的粗细
+           xlab="The estimates",
+           lwd.xaxis=2,
            lty.ci = "solid",
            graph.pos = 2)
